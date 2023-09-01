@@ -22,4 +22,4 @@ name = "zero2prod"
 actix-web = "4"
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 reqwest = { version = "0.11", features = ["json"] }
-
+serde = { version = "1", features = ["derive"] }
