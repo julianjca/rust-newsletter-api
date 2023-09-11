@@ -33,6 +33,8 @@ pub async fn subscribe(form: web::Form<FormData>, pool: web::Data<PgPool>) -> Ht
     .unwrap();
 
     HttpResponse::Ok().json(row)
+
+    // HttpResponse::Ok().finish()
 }
 
 pub async fn get_subscription(pool: web::Data<PgPool>) -> HttpResponse {
