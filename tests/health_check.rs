@@ -21,7 +21,7 @@ async fn spawn_app() -> TestApp {
     // We return the application address to the caller!
     TestApp {
         address,
-        db_pool: pool.clone(),
+        db_pool: pool,
     }
 }
 
