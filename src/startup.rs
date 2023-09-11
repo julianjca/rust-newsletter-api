@@ -3,7 +3,7 @@ use actix_web::{web, App, HttpServer};
 use sqlx::postgres::PgPool;
 use std::net::TcpListener;
 
-use crate::routes::{health_check, subscribe};
+use crate::routes::{get_subscription, health_check, subscribe};
 
 pub fn run(listener: TcpListener, db_pool: PgPool) -> Result<Server, std::io::Error> {
     let db_pool = web::Data::new(db_pool);
@@ -12,6 +12,7 @@ pub fn run(listener: TcpListener, db_pool: PgPool) -> Result<Server, std::io::Er
             // Instead of `Logger::default()`
             .route("/health_check", web::get().to(health_check))
             .route("/subscriptions", web::post().to(subscribe))
+            .route("/subscriptions", web::get().to(get_subscription))
             .app_data(db_pool.clone())
     })
     .listen(listener)?

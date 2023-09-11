@@ -1,6 +1,4 @@
-use config::{Config, ConfigError, Environment, File};
-
-use std::collections::HashMap;
+use config::Config;
 
 #[derive(serde::Deserialize)]
 pub struct Settings {
