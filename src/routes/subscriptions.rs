@@ -22,11 +22,16 @@ struct Subscription {
 }
 
 pub async fn subscribe(form: web::Form<FormData>, pool: web::Data<PgPool>) -> HttpResponse {
-    let row: (i64,) = sqlx::query_as("SELECT * from subscriptions WHERE email = $1")
-        .bind(&form.email)
-        .fetch_one(pool.as_ref())
-        .await
-        .unwrap_or((0,));
+    // insert to db and return as json
+    let row = sqlx::query_as::<_, Subscription>(
+        "INSERT INTO subscriptions (email, name) VALUES ($1, $2) RETURNING id, email, name, subscribed_at",
+    )
+    .bind(&form.email)
+    .bind(&form.name)
+    .fetch_one(pool.as_ref())
+    .await
+    .unwrap();
+
     HttpResponse::Ok().json(row)
 }
 
